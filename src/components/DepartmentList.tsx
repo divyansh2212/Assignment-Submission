@@ -8,22 +8,12 @@ import {
 } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import data from "../departmentdata.tsx"
 
 interface Department {
     department: string;
     sub_departments: string[];
 }
-
-const data: Department[] = [
-    {
-        department: 'Engineering',
-        sub_departments: ['IT', 'CSE', 'ECE', 'EEE', 'CSIT', 'MAE', 'Robotics'],
-    },
-    {
-        department: 'MBA',
-        sub_departments: ['Finance', 'Operations', 'Human Resources', 'Marketing', 'Computers'],
-    },
-];
 
 const DepartmentList: React.FC = () => {
     const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
@@ -63,12 +53,12 @@ const DepartmentList: React.FC = () => {
             selectedDepartments.includes(subDepartment)
         );
 
-    const handleToggleAllSubDepartments = (department: Department) => () => {
+    const handleToggleAllSubDepartments = (department: Department) => (event: React.MouseEvent) => {
+        event.stopPropagation();
+
         if (areAllSubDepartmentsSelected(department.sub_departments)) {
             setSelectedDepartments(
-                selectedDepartments.filter(
-                    (dep) => !department.sub_departments.includes(dep)
-                )
+                selectedDepartments.filter((dep) => !department.sub_departments.includes(dep))
             );
         } else {
             setSelectedDepartments([
@@ -87,10 +77,7 @@ const DepartmentList: React.FC = () => {
                             <Checkbox
                                 checked={isDepartmentSelected(departmentObj)}
                                 indeterminate={
-                                    areAllSubDepartmentsSelected(departmentObj.sub_departments) &&
-                                    selectedDepartments.some((dep) =>
-                                        departmentObj.sub_departments.includes(dep)
-                                    )
+                                    areAllSubDepartmentsSelected(departmentObj.sub_departments)
                                 }
                                 onClick={handleToggleAllSubDepartments(departmentObj)}
                             />

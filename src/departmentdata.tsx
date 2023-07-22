@@ -1,6 +1,6 @@
 const data = [
     {
-      department: 'Enineering',
+      department: 'Engineering',
       sub_departments: ['IT', 'CSE', 'ECE', 'EEE', 'CSIT', 'MAE', 'Robotics'],
     },
     {
